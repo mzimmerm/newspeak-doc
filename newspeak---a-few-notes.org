@@ -62,6 +62,10 @@ Notes:
   - Any changes we make (for example: add a class, change a class,
     evaluate something in the workspace) are stored in the browser
     local storage under an entry named "backup".
+  - To look at the changes you made, go to the browser debugger.
+    For example, in Chrome or Chromium, press F12 , then go to the Application tab.
+    In the Storage section expand "Local Storage".
+    You can see your changes in the appropriate URL, under key="backup" 
   - To save your changes in the browser local storage explicitly "now", click on the diskette "save" button [[file:img/newspeak---a-few-notes.org-save-button.png]]
   - Saving changes outside the browser:
     - If you do clear your browser local storage, your changes will be lost.
