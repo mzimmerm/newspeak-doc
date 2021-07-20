@@ -1,0 +1,23 @@
+Newspeak3
+'Root'
+
+class CounterAppWithDependencies packageUsing: manifest = (
+    |
+    private hopscotchRuntime = manifest HopscotchForHTML5Runtime packageUsing: manifest.
+    private CounterUIWithDependencies = manifest CounterUIWithDependencies.
+    
+    private ATranslation = manifest ATranslation.
+    |
+) (
+
+
+  public main: platform args: args = (
+    | 
+    hopscotchPlatform = platform isKindOfPlatformWithHopscotch ifTrue: [platform] ifFalse: [hopscotchRuntime using: platform].
+    ui = CounterUIWithDependencies usingPlatform: hopscotchPlatform andTranslationClass: ATranslation.
+    |
+          
+    hopscotchPlatform hopscotch HopscotchWindow openSubject: (ui CounterSubject onModel: ui Counter new).
+  )
+) : (
+)

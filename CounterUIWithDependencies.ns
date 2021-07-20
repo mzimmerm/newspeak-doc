@@ -1,0 +1,66 @@
+Newspeak3
+'Root'
+class CounterUIWithDependencies usingPlatform: p andTranslationClass: aTranslationClass = (
+  |
+  private Subject = p hopscotch Subject.
+  private Presenter = p hopscotch Presenter.
+  
+  private ATranslation = aTranslationClass.
+  |
+) (
+
+  class CounterPresenter onSubject: s <CounterSubject> = Presenter  onSubject: s (
+  ) (
+      definition = (
+
+        |aTranslation|
+        aTranslation:: (ATranslation new).
+    
+        ^row: {
+            label: subject count. 
+            mediumBlank. 
+            button: (aTranslation translate: 'increment') action: [updateGUI: [subject increment]].
+            button: (aTranslation translate: 'decrement') action: [updateGUI: [subject decrement]].
+            button: (aTranslation translate: 'reset')     action: [updateGUI: [subject clear]].     
+            }.
+      )
+      public isKindOfCounterPresenter = (
+        ^true
+      )
+      isMyKind: other = (
+        ^other isKindOfCounterPresenter
+      )
+    ) : ()
+    
+  public class Counter = (
+    | public count <Integer> ::= 0. |
+  ) (
+  ) : (
+  )
+  
+  public class CounterSubject onModel: m <Counter> =  Subject onModel: m(
+  ) (
+      createPresenter ^ <CounterPresenter> = (
+        ^CounterPresenter onSubject: self
+      )
+      
+      public isKindOfCounterSubject = (
+        ^true
+      )
+      isMyKind: other = (
+        ^other isKindOfCounterSubject
+      )
+      public decrement = (
+        model count: count - 1
+      )
+      public increment = (
+        model count: count + 1
+      )
+      public count ^ <Integer> = (
+        ^model count
+      )
+      public clear = (
+        model count: 0
+      )
+    ) : ()
+) : ()
