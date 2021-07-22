@@ -1,9 +1,0 @@
-Newspeak3
-'Root'
-class HelloWorld packageUsing: manifest = (
-) (
-public main: platform args: args = (
-    ((platform js global at: 'document') at: 'body' put: ((platform js global at: 'document') createElement: 'body')) appendChild: ((platform js global at: 'document') createTextNode: 'Hello, World!').
-)
-) : (
-)
