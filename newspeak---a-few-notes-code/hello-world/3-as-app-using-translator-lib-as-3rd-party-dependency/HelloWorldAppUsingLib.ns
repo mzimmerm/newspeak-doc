@@ -1,0 +1,15 @@
+Newspeak3
+'Root'
+class HelloWorldAppUsingLib packageUsing: manifest = (
+  |
+  helloTranslatorLib = manifest HelloTranslatorLib packageLibraryUsing: manifest.
+  |
+) (
+public main: platform args: args = (
+    |helloTranslator|
+    helloTranslator:: helloTranslatorLib buildUsing: platform.
+
+    (helloTranslator translate: 'Hello World from HelloWorldApp') out.
+  )
+) : (
+)

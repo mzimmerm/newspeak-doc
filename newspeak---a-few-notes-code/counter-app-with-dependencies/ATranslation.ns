@@ -1,0 +1,20 @@
+Newspeak3
+'Root'
+class ATranslation = (
+	|
+	slot1
+	slot2
+	|
+) (
+public translate: text = (
+
+      text == 'increment' ifTrue: [^ 'pridat'.].
+      text == 'decrement' ifTrue: [^ 'ubrat'.].
+      text == 'reset' ifTrue: [^ 'vymazat'.].
+      
+      break.
+      
+      ^ 'unable to translate'.
+    )
+) : (
+)

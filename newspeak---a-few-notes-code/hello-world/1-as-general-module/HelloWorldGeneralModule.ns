@@ -1,0 +1,14 @@
+Newspeak3
+'Root'
+class HelloWorldGeneralModule = (
+(*
+ If we Save class, or click on the class link, the "Hello World" stringshows on the bottom.
+  - How did it get there?
+    - Clicking the class link, prepares to present the class.  In the IDE, the class is presented inside an instance of itself.  So, an instance of ~HelloWorldGeneralModule~ is created, by calling the implicit "#new" factory constructor.  The code of the factory constructor is ~'Hello World ' out~.  This code, when running, appends the text to the end of the body.
+    - Similarly, every time we just click on the > in the class list beside the class, a new instance is created (to serve the presented, and one more 'Hello World' appears
+*)
+
+'Hello World ' out
+) (
+) : (
+)

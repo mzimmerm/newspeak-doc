@@ -1,0 +1,56 @@
+Newspeak3
+'Root'
+class CheckedItemUI usingPlatform: platformWithHopscotch = (
+|
+Subject   = platformWithHopscotch hopscotch Subject.
+Presenter = platformWithHopscotch hopscotch Presenter.
+|
+) (
+public class CheckedItemModel = (
+|
+  public label ::= 'check to complete'.
+  public isChecked ::= false.
+  |
+) (
+) : (
+)
+public class CheckedItemSubject onModel: model = Subject onModel: model (
+) (
+createPresenter = (
+    ^CheckedItemPresenter onSubject: self.
+  )
+isMyKind: other = (
+    ^ other isKindOfCheckedItemSubject.
+  )
+isKindOfCheckedItemSubject = (
+    ^ true.
+  )
+) : (
+)
+public class CheckedItemPresenter onSubject: subject = Presenter onSubject: subject (
+) (
+isKindOfCheckedItemPresenter = (
+    ^true.
+  )
+isMyKind: other = (
+    ^other isKindOfCheckedItemPresenter.
+  )
+public definition = (
+
+    ^column: {
+      label: 'column label: Rudiments of Todo list.'.
+      (checkbox: subject model label
+       value: subject model isChecked
+        action: [  :aaachecked | updateGUI: 
+                           [  (subject model isChecked)
+                                  ifTrue: [subject model isChecked: false]
+                                  ifFalse: [subject model isChecked: true]
+                            ]
+                        ]
+      ).
+    }. 
+  )
+) : (
+)
+) : (
+)

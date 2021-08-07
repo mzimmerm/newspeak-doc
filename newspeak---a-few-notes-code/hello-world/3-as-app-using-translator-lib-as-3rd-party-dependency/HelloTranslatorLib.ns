@@ -1,0 +1,19 @@
+Newspeak3
+'Root'
+class HelloTranslatorLib packageLibraryUsing: manifest = (
+
+    (* Library (distribution) class provides packaging and building of the HelloTranslator module *) 
+    | 
+    HelloTranslator = manifest HelloTranslator. 
+    |
+)
+(
+   public buildUsing: platform = (
+     |helloTranslator|
+     helloTranslator:: HelloTranslator new.
+
+     ^helloTranslator.
+   )
+) : (
+)
+ 

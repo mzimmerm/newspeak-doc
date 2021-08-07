@@ -1,0 +1,20 @@
+Newspeak3
+'Root'
+class HelloWorldApp packageUsing: manifest = () (
+public main: platform args: args = (
+      (* 
+         - Note: In the IDE, class has the links *[deploy] [configurations] [run] [debug]* beside it.
+                 This is because the presence of ~#packageUsing: manifest~ makes the class an App.
+                 The tools (the IDE) understand this message and use it 
+                   to show actions that can be done with an App: run, debug, deploy, show available configurations.  
+                 In addition, the presence of another method, the ~#main: platform args: args~ 
+                   makes the module runnable as a standalone App. 
+        - Click the *[run]* link to run the app inside the IDE.  
+          The IDE calls first the ~#packageUsing: manifest~, then the ~#main: platform args: args~ which runs, 
+            and the text 'Hello World from HelloWorldApp' will be appended after the page body.
+      *)
+      
+      'Hello World from HelloWorldApp' out.
+    )
+) : (
+)

@@ -1,0 +1,27 @@
+Newspeak3
+'Root'
+class HelloTranslatorLibWithMoreDependencies packageLibraryUsing: manifest = (
+  (* This version of HelloTranslatorLib is not ready yet due to missing
+     HelloTranslatorHelper and LanguageSelectorLib.
+     Use the above version in your IDE experiments
+  *)
+  | 
+  HelloTranslator = manifest HelloTranslator.
+  HelloTranslatorHelper = manifest HelloTranslatorHelper.
+  LanguageSelectorLib = manifest LanguageSelectorLib packageLibraryUsingManifest: manifest.
+  |
+) (
+public buildUsing: platform = (
+    |defaultlanguageSelector helloTranslator|
+
+    defaultlanguageSelector = LanguageSelectorLib buildUsing: platform.
+
+    helloTranslator = HelloTranslator
+                        helpedBy: (HelloTranslatorHelper new)
+                        with3rdPartyLanguageSelector: defaultlanguageSelector.
+    (* or #usingPlatform:helpedBy:with3rdPartyLanguageSelector: if platform was needed *)
+
+    ^helloTranslator.
+  )
+) : (
+)

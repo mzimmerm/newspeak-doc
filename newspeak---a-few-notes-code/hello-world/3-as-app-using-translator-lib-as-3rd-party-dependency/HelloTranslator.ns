@@ -1,0 +1,10 @@
+Newspeak3
+'Root'
+class HelloTranslator = () (
+public translate: text = (
+      text = 'Hello World from HelloWorldApp' ifTrue: [^ 'Hallo Welt von HelloWorldApp'.].
+      
+      ^ 'unable to translate'.
+    )
+) : (
+)
