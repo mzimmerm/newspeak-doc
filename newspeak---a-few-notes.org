@@ -177,10 +177,10 @@ Notes:
 - Result: A new page opens, showing Newspeak classes, similar to [[file:img/newspeak---a-few-notes.org-newspeak-source.png]]
   - Note on the result: In the result, you should NOT see classes named ~CounterApp~ or ~CounterUI~.  If you do, you have most likely run through this tutorial before, and the classes are already in your browser local storage.  To clean any local changes saved locally for the online Newspeak, you can clean them in the browser local storage.  See 
 - *Motivation for the next action: We want to build the sample app ~CounterApp~.  We choose to build it simply by downloading and compiling two files from the existing source from the Newspeak github repo.*
-- Action: In the top right of the page (in the same line where we see "Root +") [[file:img/newspeak---a-few-notes.org-3-vertical-dots.png]], click the *vertical 3-dot* button on the far right.
+- Action:  <<compile-files>> In the top right of the page (in the same line where we see "Root +") [[file:img/newspeak---a-few-notes.org-3-vertical-dots.png]], click the *vertical 3-dot* button on the far right.
 - Result: A popup  [[file:img/newspeak---a-few-notes.org-compile-files.png]] shows
 
-- Action: Click "Compile Files".  This will ask us to select files stored on disk, and compile them.
+- Action: Click "Compile File(s)".  This will ask us to select files stored on disk, and compile them.
 - Result: OS file browser opens, and ask us to select files in the operating system file browser. 
 - Action: Navigate to the directory where we checked out the Newspeak github repo, OR where we saved the source for the ~.ns~ files (see Prerequisites of this section).  Select ~CounterApp.ns~ and ~CounterUI.ns~
 - Result: *The classes from the selected ~.ns~ files compile, and show in your IDE.* In your class list (the list under Root +), you should now see a section similar to this [[file:img/newspeak---a-few-notes.org-counter-classes.png]]
@@ -298,7 +298,7 @@ One more "fine point" note:
 - This flipping between the online Newspeak and local Newspeak could be confusing.  We could have started by downloading Newspeak locally, and follow the whole tutorial in local Newspeak.  However, we thought that may discourage some people who want to "take the shortest path", and start online.
 
 
-*Steps: Now we have introduced the context, we start the core of this section: We create the deployable file, ~CounterApp.vfuel~ and deploy it to the local Newspeak, by following the Action/Result steps below:*
+*Steps: <<make-deployment-file>> Now we have introduced the context, we start the core of this section: We create the deployable file, ~CounterApp.vfuel~ and deploy it to the local Newspeak, by following the Action/Result steps below:*
 
 - Action: Navigate to the online version of Newspeak at https://newspeaklanguage.org/samples/primordialsoup.html?snapshot=HopscotchWebIDE.vfuel and click the "Newspeak Source"
 - Result: Under "Root" you should see an alphabetically organized list of classes, similar to [[file:img/newspeak---a-few-notes.org-newspeak-source.png]], 
@@ -669,7 +669,7 @@ From the generic requirements above, App and Library need some way to perform th
 Following the basic requirements from the previous section [[*Application and library in computing]] in mainstream computing, we need methods such as those below.  The names are arbitrary, but conventional, and represent the APIs understood on the platform:
 
 - For an App:
-  - To perform requirement 3, /packaging/, let's call the method ~#package~
+  - To perform requirement 3, /packaging/, let's call the method ~#package~.
   - To perform requirement 1, /start execution/, let's call the method ~#main~
 - For a Library:
   - To perform requirement 3, /packaging/, let's call the method ~#packageLibrary~
@@ -692,6 +692,16 @@ But, how is the solution implemented, in more details? Well, we simply add some 
 
 - *To build (instantiate) a Library or execute and App*, we need to supply the capabilities of the Newspeak platform.  This IS provided by the /platform object/ analyzed in [[*The platform object][The platform object]].  So _we will pass the /platform/ object to the execution or instantiating methods_.
 - *To package     a Library or an App*, we need to supply all classes the Library or App needs to "carry along" in it's package.  Such "carried along" classes become slots on the module object (the "carried along" classes play the role of "imported classes" in mainstream).  In the IDE, during development of the module we are packaging, we may have been creating our own top level classes (and their nested classes obviously) needed by the module we are packaging.  Those classes do not exist on the end-user system where we will send the package for building or execution.  So all those added classes have to be "carried along" in the package.  We have seen all available classes in the IDE, including those we may have added, are supplied by [[*The manifest object][The manifest object]].  So _we will pass the /manifest/ object to the packaging methods_.
+
+
+So, in Newspeak, to supply dependencies, (due to intentional lack of global namespace), we will have to extend the signature names from previous chapter:
+
+- For an App:
+  - To perform requirement 3, /packaging/, let's call the method ~#packageUsing: manifest~.
+  - To perform requirement 1, /start execution/, let's call the method ~#main: platform args: args~
+- For a Library:
+  - To perform requirement 3, /packaging/, let's call the method ~#packageLibraryUsing: manifest~
+  - To perform requirement 2, /instantiate, load and use by the caller app/, let's call the method ~#buildUsing: platform~
 
 
 
@@ -1864,8 +1874,17 @@ We saw how this sequence is responsible of presenting Help Text (with embedded N
 
 
 
-* IN-PROGRESS-NOW HopscotchForHTML5: Analysing it by digging though code; discovering Subject, Model, Presenter and Fragment; writing a UI app based on what we learned
+* The Newspeak UI, ~HopscotchForHTML5~: Analysing it by digging though code; discovering ~Subject~ ~Model~ ~Presenter~ and ~Fragment~; writing ~CheckedItemApp~ sample App with a UI app based on what we learned
 
+** If you wish to start at the end: Full code of HopscotchForHTML5 sample app
+
+If you wish to start at the end, look at the full code of HopscotchForHTML5 sample app
+
+https://github.com/mzimmerm/newspeak-doc/tree/main/newspeak---a-few-notes-code/checked-item-app
+
+and some final comments of this section in [[*5. Complete code and UI of the *CheckedItemApp*][5. Complete code and UI of the *CheckedItemApp*]].
+
+ 
 ** Discovery of the *HopscotchForHTML5* class basics
 
 *** Chapter goal
@@ -2293,7 +2312,7 @@ The concrete implementations should return the actual "widget" (presentation) - 
   )
 #+end_example
 
-todo-later - link to example when ready
+For a sample implementation, see the ~#definition~ method in [[*Class CheckedItemPresenter][Class CheckedItemPresenter]], or in the complete code in [[*5. Complete code and UI of the *CheckedItemApp*][5. Complete code and UI of the *CheckedItemApp*]].
 
 
 *** Instance methods on Presenter that create instances of Fragments
@@ -2566,7 +2585,7 @@ As a start, we borrow code from the Hello World App to create a top level App cl
 
 *** 2. Add code to the *CheckedItemApp* which allows to "import" the Hopscotch module
 
-**** IN-PROGRESS-NOW Add the packaging of the HopscotchForHTML5 module
+**** Add the packaging of the HopscotchForHTML5 module
 
 In this chapter, we to progress the code of the app we want to build by adding things that allow us to build a UI.
 
@@ -2595,9 +2614,9 @@ class CheckedItemApp packageUsing: manifest = (
 )
 #+end_example
 
-While we keep the full code listed here, in the IDE we find the ~CheckedItemApp>>#packageUsing: manifest~ method and paste the 3-line change there.
+While we keep the full code listed here, to only paste the added section, find the ~CheckedItemApp>>#packageUsing: manifest~ method in the IDE, and paste the 3-line section there.
 
-todo-later add screenshot.
+[[file:img/newspeak---a-few-notes.org-checked-item-app-step-3.png]]
 
 
 **** Add the hopscotchForHTML5 module that will allow us to build UI
@@ -2634,9 +2653,7 @@ class CheckedItemApp packageUsing: manifest = (
 
 In the IDE, find the already created method ~CheckedItemApp>>#main: platform args: args~ and paste the added 5-line section there. If you skipped the chapter where ~#main:args:~ was first created, in the IDE, use + to add an instance method to ~CheckedItemApp~ (make sure it is an instance method, not a constructor).
 
-The expression defining the ~platformWithHopscotch~ is perhaps the only thing we did not fully explain. We did explain the "true" branch but not the "false" branch. There is a detail description in the final code.
-
-todo-later add screenshot.
+The expression defining the ~platformWithHopscotch~ is perhaps the only thing we did not fully explain in this exploration. We did explain the "true" branch but not the "false" branch. There is a detail description in the final code, see [[* 5. Complete code and UI of the *CheckedItemApp*][ 5. Complete code and UI of the *CheckedItemApp*]].
 
 
 *** 3. Write code for *CheckedItemUI*, the class showing the UI
@@ -2752,11 +2769,9 @@ Presenter is the class which does the work of creating the UI widgets. We have s
 
 For a concrete UI, method which creates the UI view is ~#definition~. It does that by creating and returning Fragmets or Presenter objects. The created objects can be a composition of both layout elements such as rows and columns, and widgets such as checkboxes and labels.
 
-todo-later - add link to concrete UI code.
-
 Also, we will need [[*The formulaic required repetitive methods of #isMyKind: and #isKindOfX][The formulaic required repetitive methods of #isMyKind: and #isKindOfX]].
 
-From this summary, our ~CheckedItemPresenter~ (which will be, as it's model and subject, a nested class in CheckedItemUI) should look like this:
+Add the following code for class ~CheckedItemPresenter~. As with the model and presenter, we make the ~CheckedItemPresenter~ an inner class of CheckedItemUI, by clicking the + beside Classes inside CheckedItemUI.
 
 ~class CheckedItemPresenter~
 #+begin_example
@@ -2790,12 +2805,6 @@ public definition = (
 )
 #+end_example
 
-todo-later add section on how basic components : checkbox, redio, label, button handle actions
-
-
-As with the model and presenter, an inner class of CheckedItemUI is added by clicking the + beside Classes inside CheckedItemUI:
-
-todo-later add screenshot
 
 
 *** 4. Integrate the *CheckedItemUI* into the *CheckedItemApp*
@@ -2844,7 +2853,11 @@ concreteSubject:: ConcreteSubject onModel: concreteModel.
 hopscotchWindow openSubject: concreteSubject.
 #+end_example
 
-So let us use this snippet into our code - the only difference is the class names,  instead of starting with /Concrete/ starts with /CheckedItem/. We are making this code unnecessarily verbatim and long, to spell out what we discussed:
+So let us use this snippet in our core UI code (instead of starting names with /Concrete/ start them with /CheckedItem/).
+
+Add the "3-lines" section on the bottom of ~#main:args:~, so it looks like this:
+
+We are making this code unnecessarily verbatim and long, to spell out what we discussed:
 
  ~class CheckedItemApp~
  #+begin_example
@@ -2892,6 +2905,7 @@ So let us use this snippet into our code - the only difference is the class name
 
 Let's go over the added lines, and why they were added this way.
 
+
 ***** Why did we added the line calling factory constructor of CheckedItemUI? Also, this leads to a change in CheckedItemUI.
 
 So, why did we add this line to the ~CheckedItemApp>>#main:args:~ method:
@@ -2900,7 +2914,7 @@ So, why did we add this line to the ~CheckedItemApp>>#main:args:~ method:
 
 Explanation:
 
-- The CheckedItemApp is merely an application wrapper around the module CheckedItemUI. This is how modules are distributed and run. Our module (top level class instance) CheckedItemUI needs a factory constructor which is passed a platform object.  At runtime, instances of top level classes "import" dependencies from the ~platform~.  All top level classes that are general modules need such factory constructor. It was discussed at length in the early sections (zoo etc). todo-later add link.
+- The CheckedItemApp is merely an application wrapper around the module CheckedItemUI. This is how modules are distributed and run. Our module (top level class instance) CheckedItemUI needs a factory constructor which is passed a platform object.  At runtime, instances of top level classes "import" dependencies from the ~platform~.  All top level classes that are general modules need such factory constructor. It was discussed at length in the early sections, around and after section [[*Application and library modules in Newspeak][Application and library modules in Newspeak]].
 
 - So from above links, we know our CheckedItemUI will need a factory constructor such as ~CheckedItemUI>>#usingPlatform: platformWithHopscotch.~ This is what the added line expresses: It creates an instance of CheckedItemUI and stores it on a local variable.
 
@@ -2966,11 +2980,30 @@ In the last chapter, we merely summarize code for all classes we created for our
 
 *** 5. Complete code and UI of the *CheckedItemApp*
 
-todo links to newspeak-docs
+The complete code and UI of the ~CheckedItemApp~ can be found here:
 
-When running, this is how it looks:
+https://github.com/mzimmerm/newspeak-doc/tree/main/newspeak---a-few-notes-code/checked-item-app
+
+If you prefer not to follow all the detail steps of buiding the ~CheckedItemApp~, you can just install the complete code from there.
+
+To install the complete code to Newspeak, download the ".ns" files from there, then, from your Newspeak IDE (local or online) use the "Compile file(s)" link to import the files into your IDE. If you are not sure what that means, read the section around [[compile-files]["Compile file(s)"]].
+
+Running the app from the IDE, presents the UI we built as in this screenshot. 
 
 [[file:img/newspeak---a-few-notes.org-checked-item-app-ui-running.png]]
+
+You can also package it and run the App as a standalone .vfuel file from the IDE, by clicking the *[deploy]* link beside the class name, then selecting "As VictoryFuel with Mirrors".
+
+[[file:img/newspeak---a-few-notes.org-deploy-checked-item-app.png]]
+
+More details on deployment for another sample App is in the intro section around [[make-deployment-file][Make deployment file for CounterApp]]
+
+
+Note: The code for the *CheckedItemApp* built here is as simple as it can be, to focus on understanding ~HopscotchForHTML5~. The App should be improved in the future. The main weakness of the current version is that it exposes model publicly - model functions should be wrapped in Subject.
+
+This concludes the chapter that explores ~HopscotchForHTML5~.
+
+
 * Some of the more boring details
 
 ** HopscotchForHTML5: Analyzing senders of *Subject>>#presenter* and why *HopscotchWindow>>#openSubject: subject* should be invoked instead
