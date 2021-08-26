@@ -1,0 +1,34 @@
+Newspeak3
+'Root'
+class AAccessExperiment3 = () (
+class I1 = () (
+  m1 = (^42)
+  public m2 = (^self m1)
+  ) : (
+)
+class I2 = I1 () (
+  m1 = (^91)
+) : (
+)
+m0 = (
+  (* Note1: returns 91 - from code in I1>>#m2 = (^self m1) - because self at runtime is instanceof I2. 
+  This is an example where lexical scope of the line with "self" is I1, but instance of self is different, I2 . *)
+
+  (* Note2: Worked example of accessibility: why is the expression "I2 new m2" allowed and working here? We have to establish allowed access of each reference and message send.
+
+  1. Why may I2 be accessed here? Answer: Slide 63 - An object (this, is instance of AAccessExperiment at runtime) may access a protected member  (I2) only if : a) DOWN: member (I2) is a member of the object - this is the situation here, I2 is a member ofAAccessExperiment. b) UP member is a lexically visible member of enclosing object 
+
+  2. Why may I2 send the message "new" here? Answer:  Slide 63 as above, DOWN because "new" is protected member of I2.
+
+  3. Why may the instance "I2 new" send message "I1>>#m2"? This is harder.
+
+  First of all , if I1>>#m2 was not public (if it was protected), the message send to "m2" would result in access exception. Reason is that "I1>>#m2" is not member of the "I2 new" instance (it is a member of "I1 new" instance, but that does not count) so we cannot use the Slide 63 DOWN rule. There is no other rule talking about access to protected members, so if we want to be able to write "I2 new m2" we have 2 options:
+
+   - Keep "m2" on I1 (so m2 is "I1>>#m2") and make m2 public.
+   - Move "m2 to I2 NO THIS DOES NOT DO!
+
+*)
+^I2 new m2.
+)
+) : (
+)

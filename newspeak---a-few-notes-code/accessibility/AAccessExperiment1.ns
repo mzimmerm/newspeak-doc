@@ -1,0 +1,42 @@
+Newspeak3
+'Root'
+class AAccessExperiment1 = (
+	|
+	topSlot1 = 1.
+	topSlot2 = 2.
+	|
+) (
+class ClassNestedLevel1 = (
+	|
+	level1Slot1 = 11.
+	overrideSlot2 = 12.
+	|
+) (
+public class ClassNestedLevel2 = (
+	|
+	level2Slot1 = 21.
+	overrideSlot2 = 22.
+	|
+) (
+public level2Method1 = (
+    'level2Method1' out.
+	topSlot1 out.
+    topSlot2 out.
+    level1Slot1 out.
+    level2Slot1 out.
+    overrideSlot2 out.
+)
+) : (
+)
+public level1Method1 = (
+    'level1Method1' out.
+	topSlot1 out.
+    topSlot2 out.
+    level1Slot1 out.
+    level2Slot1 out.
+    overrideSlot2 out.
+)
+) : (
+)
+) : (
+)
