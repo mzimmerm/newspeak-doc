@@ -6,7 +6,7 @@ class I1 = () (
   ) : (
 )
 
-m0 = (
+public m0 = (
 (* 
 
 Run in workspace: AAccessExperiment2 new m0
@@ -55,7 +55,7 @@ Full reasoning of the access failing expression "I1 new m1" :
 ^I1 new m1.
 )
 
-m00 = (
+public m00 = (
 (* 
 Run in workspace: AAccessExperiment2 new m00
 
