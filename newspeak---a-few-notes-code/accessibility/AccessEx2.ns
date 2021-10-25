@@ -1,0 +1,66 @@
+Newspeak3
+'Root'
+class AccessEx2 = () (
+  class I1 = () (
+    m1 = (^42)
+  )
+
+  public m0 = (
+    (* 
+
+    Run in workspace: AccessEx2 new m0
+
+    With m1 protected (default), this method causes Access exception on I1 m1.
+
+    Why?
+
+    Reason: Slide 62: Enclosing classes cannot see private or protected members of nested classes.
+        
+    For reasoning details, let us recap the rules:
+      - Slide 62 point 2: 
+        - Enclosing classes cannot see private or protected 
+          members of nested classes
+      - Slide 63: 
+        - An object may access a protected member only if
+          a) it is a member of the object or
+          b) A lexically visible member of an enclosing object
+
+    Context of the access failing expression "I1 new m1" :
+
+      - Class where the code is lexically located: AccessEx2
+      - First, I1, a nested class of AccessEx2 is accessed: I1 and I1 new. This works.
+      - Next, a member of the nested class accessed: m1 (I1>>#m1). This fails
+
+    Full reasoning of the access failing expression "I1 new m1" :
+  
+    - First the code is trying to access: I1 and I1 new
+      - This is allowed both according to
+        - Slide 62.2: Does not apply, because it applies to class members. 
+                      In our context we are asking about access to a class (I1). 
+                      (I think the "new" factory falls somehow under the class rule, ignoring that for now)
+                      So rule 62 passed (does not apply)
+        - Slide 63a): An object (instance of AccessEx2) 
+                      may access protected member (I1) and I1>>#new because I1 
+                      is a member of the object.
+                      So rule 63 passed. 
+    - Next, the code is trying to access m1. The situation is as follows:
+        - m1 is lexically in AccessEx2>>I1 - (In I1, a nested class of AccessEx2)
+        - Using Slide 62: Enclosing class (AccessEx2) 
+                          cannot see private or protected member (m1) of nested class (I1).
+                          So rule 62 failed.
+  *)
+
+  ^I1 new m1.
+  )
+
+  public m00 = (
+    (* 
+    Run in workspace: AccessEx2 new m00
+
+    This works, why? See the first part of reasoning in m0.
+    *)
+
+  ^I1 new.
+  )
+  
+) 
