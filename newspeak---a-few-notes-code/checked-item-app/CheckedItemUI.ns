@@ -1,9 +1,10 @@
 Newspeak3
 'Root'
-class CheckedItemUI usingPlatform: platformWithHopscotch = (
+class CheckedItemUI usingPlatform: platform = (
+(* Added this primary factory method and slots for Subject and Presenter *)
 |
-Subject   = platformWithHopscotch hopscotch Subject.
-Presenter = platformWithHopscotch hopscotch Presenter.
+Subject   = platform hopscotch core Subject.
+Presenter = platform hopscotch core Presenter.
 |
 ) (
 public class CheckedItemModel = (
@@ -19,6 +20,7 @@ public class CheckedItemSubject onModel: model = Subject onModel: model (
 createPresenter = (
     ^CheckedItemPresenter onSubject: self.
   )
+(* required isMyKind and isKindOfX formulaic methods *)
 isMyKind: other = (
     ^ other isKindOfCheckedItemSubject.
   )
@@ -27,30 +29,34 @@ isKindOfCheckedItemSubject = (
   )
 ) : (
 )
+
 public class CheckedItemPresenter onSubject: subject = Presenter onSubject: subject (
 ) (
-isKindOfCheckedItemPresenter = (
-    ^true.
-  )
-isMyKind: other = (
-    ^other isKindOfCheckedItemPresenter.
-  )
 public definition = (
 
     ^column: {
-      label: 'column label: Rudiments of Todo list.'.
-      (checkbox: subject model label
+    (* Note: #label: and #checkbox:value:action: are methods on presenter *)
+      label: 'Rudiments of Todo list.'.
+      checkbox: subject model label
        value: subject model isChecked
-        action: [  :aaachecked | updateGUI: 
+       action: [  :aaachecked | updateGUI: 
                            [  (subject model isChecked)
                                   ifTrue: [subject model isChecked: false]
                                   ifFalse: [subject model isChecked: true]
                             ]
                         ]
-      ).
+      .
+    (* *)
     }. 
   )
-) : (
+
+  isMyKind: other = (
+    ^other isKindOfCheckedItemPresenter.
+  )
+
+  isKindOfCheckedItemPresenter = (
+    ^true.
+  )
+
 )
-) : (
 )

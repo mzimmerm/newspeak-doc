@@ -2,39 +2,31 @@ Newspeak3
 'Root'
 class CheckedItemApp packageUsing: manifest = (
   |
-  hopscotchForHTML5Runtime = manifest HopscotchForHTML5Runtime packageUsing: manifest.
   (* Added 1-line to package the CheckedItemUI class on slot with same name *)
   CheckedItemUI = manifest CheckedItemUI.
   |
 ) (
-public main: platform args: args = (
+  public main: platform args: args = (
     |
     (* WHILE WE DEDUCED HOW THIS BEHAVES IN THE IDE, THE VFUEL BEHAVIOR IS ONLY DESCRIBED HERE.
        In IDE: When main is invoked by clicking [run] or [debug] in the IDE,
-         we just return platform. Because in the IDE, platform is already created
-         by the IDE by 'hopscotchForHTML5Runtime using: platform' (returns PlatformWithHopscotch).
-         so calling 'platform hopscotch' returns hopscotchForHTML5.
+         we just pass it the platform. Note that calling 'platform hopscotch' returns hopscotchForHTML5.
          
-       Electron: platform behaves same as IDE platform.
-         
-       In vfuel: When main is invoked in the vfuel app, the passed platform
-                 does not contain hopscotch. It is constructed so that
-                 isKindOfPlatformWithHopscotch returns false.
-                 We need to re-create hopscotchForHTML5Runtime,
-                 by calling 'hopscotchForHTML5Runtime using: platform' (returns PlatformWithHopscotch);
-                 This will be same PlatformWithHopscotch as in the IDE.
-    *)
-    platformWithHopscotch = platform isKindOfPlatformWithHopscotch ifTrue: [platform]
-                                                                   ifFalse: [hopscotchForHTML5Runtime using: platform].   
+       Electron and vfuel: platform behaves same as IDE platform.
 
-    hopscotchForHTML5 = platformWithHopscotch hopscotch.
+       LEGACY vfuel note: When main was invoked in the vfuel app, the passed platform
+                 did not contain hopscotch. That is why the legacy primary factory
+                 App>#packageUsing: manifest had to package slot hopscotchForHTML5Runtime, then use it here.
+                 This is no longer needed. 
+    *)
+
     (* Added 1-line to instantiate CheckedItemUI from the platform - which has hopscotch available *)
-    checkedItemUI = CheckedItemUI usingPlatform: platformWithHopscotch.
+    checkedItemUI = CheckedItemUI usingPlatform: platform.
 
     (* Added 3 temporary slots to verbosely process *)
     checkedItemModel
     checkedItemSubject
-    checkedItemPresenter
+    (* TODO-00 UNUSED checkedItemPresenter *)
     |
 
     (* Added 3-lines to show steps very verbosely.
@@ -43,9 +35,9 @@ public main: platform args: args = (
     *)
     checkedItemModel:: checkedItemUI CheckedItemModel new.
     checkedItemSubject:: checkedItemUI CheckedItemSubject onModel: checkedItemModel.
-    hopscotchForHTML5 HopscotchWindow openSubject: checkedItemSubject.
+    platform hopscotch HopscotchWindow openSubject: checkedItemSubject.
 
+    (* todo-00 - we need to describe where our idea of HopscotchWindow comes from. Also we need to describe that our code does NOT instantiate the Presenter here - that is already done in #createPresenter *)
     (* also removed: 'Hello World from HelloWorldApp' out. *)
   )
-) : (
 )

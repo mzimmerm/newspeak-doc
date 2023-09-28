@@ -76,7 +76,7 @@
           ProtC2 new pubM. 
 
           (* Succeeds 
-             Reason:  ~pubM~ is public. According to [[* Colollary on slides 61, 62, 63][Colollary on slides 61, 62, 63]] public members are accessible anywhere - even in nested classes that are not public. Here, ~C1>>ProtC2>>#pubM~ is accessible from anywhere.  
+             Reason:  ~pubM~ is public. According to [[* Corollary on slides 61, 62, 63][Corollary on slides 61, 62, 63]] public members are accessible anywhere - even in nested classes that are not public. Here, ~C1>>ProtC2>>#pubM~ is accessible from anywhere.  
           *)
 
           ^ 'protC2NewPubM'
