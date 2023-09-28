@@ -9,7 +9,8 @@ Presenter = platform hopscotch core Presenter.
 ) (
 public class CheckedItemModel = (
 |
-  public label ::= 'check to complete'.
+  public itemText = 'Not Editable Todo itemText: '.
+  public itemTextWithStatus ::= itemText, ' : STILL TODO'.
   public isChecked ::= false.
   |
 ) (
@@ -35,18 +36,23 @@ public class CheckedItemPresenter onSubject: subject = Presenter onSubject: subj
 public definition = (
 
     ^column: {
-    (* Note: #label: and #checkbox:value:action: are methods on presenter *)
-      label: 'Rudiments of Todo list.'.
-      checkbox: subject model label
-       value: subject model isChecked
-       action: [  :aaachecked | updateGUI: 
+      (* Note: #label: and #checkbox:value:action: are methods on presenter *)
+      label: 'Rudimentary TODO App'.
+      checkbox: subject model itemTextWithStatus
+      value: subject model isChecked
+      action: [  :aaachecked | updateGUI:
                            [  (subject model isChecked)
-                                  ifTrue: [subject model isChecked: false]
-                                  ifFalse: [subject model isChecked: true]
+                                  ifTrue: [
+                                    subject model isChecked: false.
+                                    subject model itemTextWithStatus: subject model itemText, ' : STILL TODO'.
+                                    ]
+                                  ifFalse: [
+                                    subject model isChecked: true.
+                                    subject model itemTextWithStatus: subject model itemText, ' : DONE'.
+                                  ]
                             ]
                         ]
       .
-    (* *)
     }. 
   )
 
