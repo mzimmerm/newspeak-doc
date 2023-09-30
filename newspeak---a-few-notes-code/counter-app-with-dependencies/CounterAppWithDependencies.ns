@@ -8,11 +8,12 @@ class CounterAppWithDependencies packageUsing: manifest = (
     |
 ) (
 public main: platform args: args = (
-    | 
+    |
+    hopscotchPlatform = platform hopscotch.
     ui = CounterUIWithDependencies usingPlatform: hopscotchPlatform andTranslationClass: ATranslation.
     |
           
-    platform hopscotch HopscotchWindow openSubject: (ui CounterSubject onModel: ui Counter new).
+    hopscotchPlatform HopscotchWindow openSubject: (ui CounterSubject onModel: ui Counter new).
   )
 ) : (
 )
