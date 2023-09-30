@@ -26,7 +26,6 @@ class CheckedItemApp packageUsing: manifest = (
     (* Added 3 temporary slots to verbosely process *)
     checkedItemModel
     checkedItemSubject
-    (* TODO-00 UNUSED checkedItemPresenter *)
     |
 
     (* Added 3-lines to show steps very verbosely.
@@ -37,7 +36,12 @@ class CheckedItemApp packageUsing: manifest = (
     checkedItemSubject:: checkedItemUI CheckedItemSubject onModel: checkedItemModel.
     platform hopscotch HopscotchWindow openSubject: checkedItemSubject.
 
-    (* todo-00 - we need to describe where our idea of HopscotchWindow comes from. Also we need to describe that our code does NOT instantiate the Presenter here - that is already done in #createPresenter *)
+    (* Note that the above code does NOT EXPLICITLY instantiate the Presenter here -
+       that is already done implicitly by the super Subject,
+       during ~checkedItemSubject:: checkedItemUI CheckedItemSubject onModel: checkedItemModel~
+       by the super calling the ~Subject#createPresenter~
+    *)
+
     (* also removed: 'Hello World from HelloWorldApp' out. *)
   )
 )

@@ -3,7 +3,7 @@ Newspeak3
 class HelloTranslatorLibWithMoreDependencies packageLibraryUsing: manifest = (
   (* This version of HelloTranslatorLib is not ready yet due to missing
      HelloTranslatorHelper and LanguageSelectorLib.
-     Use the above version in your IDE experiments
+     Use HelloTranslatorLib in your IDE experiments
   *)
   | 
   HelloTranslator = manifest HelloTranslator.

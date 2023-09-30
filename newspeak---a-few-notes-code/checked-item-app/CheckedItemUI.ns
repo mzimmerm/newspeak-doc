@@ -18,6 +18,10 @@ public class CheckedItemModel = (
 )
 public class CheckedItemSubject onModel: model = Subject onModel: model (
 ) (
+(* Important override: Creates Presenter. Called by the framework in openSubject called
+   from ~CheckedItemApp>>#main:args:~ when calling ~HopscotchWindow openSubject: checkedItemSubject.~
+   Framework also associates Subject -> Presenter via Subject>>#presenterSlot:: ^createPresenter
+*)
 createPresenter = (
     ^CheckedItemPresenter onSubject: self.
   )

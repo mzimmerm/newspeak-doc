@@ -1,0 +1,16 @@
+Newspeak3
+'Root'
+class HelloWorldGeneralModule = (
+(*
+ If we Accept this class declaration,
+ or if we click on the class link,
+ the "Hello World" string shows on the bottom.
+  - How did it get there?
+    - After click on the class link, the IDE prepares some things to present the class.  In the IDE, the class is presented inside an instance of the class.  So, the IDE creates an instance of the ~HelloWorldGeneralModule~, by invoking the implicit ~HelloWorldGeneralModule>>#new~ primary factory method.  The method body is executed, calling ~'Hello World ' out~.  ~#out~ is a method on String; it is implemented in the Wasm version to append a ~<div>'Hello World '</div> element to the IDE's HTML document body, thus displaying the string at the end of the IDE's page.
+    - Similarly, every time just click on the > expand action to the left of the class name, a new instance is created by the IDE, causing one more 'Hello World' to appear.
+*)
+
+'Hello World ' out
+) (
+) : (
+)
