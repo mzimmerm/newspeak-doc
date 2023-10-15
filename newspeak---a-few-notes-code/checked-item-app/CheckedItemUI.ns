@@ -18,14 +18,9 @@ public class CheckedItemModel = (
 )
 public class CheckedItemSubject onModel: model = Subject onModel: model (
 ) (
-(* Important override: Creates Presenter. Called by the framework in openSubject called
-   from ~CheckedItemApp>>#main:args:~ when calling ~HopscotchWindow openSubject: checkedItemSubject.~
-   Framework also associates Subject -> Presenter via Subject>>#presenterSlot:: ^createPresenter
-*)
 createPresenter = (
     ^CheckedItemPresenter onSubject: self.
   )
-(* required isMyKind and isKindOfX formulaic methods *)
 isMyKind: other = (
     ^ other isKindOfCheckedItemSubject.
   )
@@ -34,39 +29,39 @@ isKindOfCheckedItemSubject = (
   )
 ) : (
 )
-
 public class CheckedItemPresenter onSubject: subject = Presenter onSubject: subject (
 ) (
+isMyKind: other = (
+    ^other isKindOfCheckedItemPresenter.
+  )
+isKindOfCheckedItemPresenter = (
+    ^true.
+  )
 public definition = (
+	(* pull model from subject *)
+	|model = subject model.|
 
     ^column: {
       (* Note: #label: and #checkbox:value:action: are methods on presenter *)
       label: 'Rudimentary TODO App'.
-      checkbox: subject model itemTextWithStatus
-      value: subject model isChecked
+      checkbox: model itemTextWithStatus
+      value: model isChecked
       action: [  :aaachecked | updateGUI:
-                           [  (subject model isChecked)
+                           [  (model isChecked)
                                   ifTrue: [
-                                    subject model isChecked: false.
-                                    subject model itemTextWithStatus: subject model itemText, ' : STILL TODO'.
+                                    model isChecked: false.
+                                    model itemTextWithStatus: model itemText, ' : STILL TODO'.
                                     ]
                                   ifFalse: [
-                                    subject model isChecked: true.
-                                    subject model itemTextWithStatus: subject model itemText, ' : DONE'.
+                                    model isChecked: true.
+                                    model itemTextWithStatus: model itemText, ' : DONE'.
                                   ]
                             ]
                         ]
       .
     }. 
   )
-
-  isMyKind: other = (
-    ^other isKindOfCheckedItemPresenter.
-  )
-
-  isKindOfCheckedItemPresenter = (
-    ^true.
-  )
-
+) : (
 )
+) : (
 )
