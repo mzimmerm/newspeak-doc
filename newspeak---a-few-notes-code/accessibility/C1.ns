@@ -29,9 +29,10 @@
 
       protectedFails = (
           ^'protectedFails' 
-          (* C1 new protectedFails: Fails. 
+          (* C1 new protectedFails.
 
-          Reason:  I feel the reason is not completely obvious, as we are typing code in the Workspace, and it is not immediately clear how code in Workspace is lexically (nesting wise) related to the class ~C1~. A note: The Newspeak IDE provides a Root namespace, all modules are nested in it. Both the Workspace and the C1 module code are nested in the IDE. Having made that note let's work trough why this message send fails: The workspace context is lexically NOT enclosing C1. The code line that we wrote, ~C1 new protectedFails~ is lexically in the workspace module; the member we are trying to access, ~protectedFails~, is lexically in the C1 module.  In summary, this fails because of rule on slide 63 b: An object (workspace where we type the expression) may access private or protected member (~protectedFails~) only if a) it is a member or b) a lexically visible member of an enclosing class (C1 class is not enclosing to Workspace class). In our situation, the code in expressions ~C1 new protectedFails~ typed in the Workspace class cannot see a private or protected member (~C1>>#protectedFails~) of a class (C1) because the method C1>>#protectedFails is neither a member of  Workspace, nor it is in Workspace's enclosing class.
+          Fails: 
+          Reason:  I feel the reason is not completely obvious, as we are typing code in the Workspace, and it is not immediately clear how code in Workspace is lexically (nesting wise) related to the class ~C1~. A note: The Newspeak IDE provides a Root namespace, all modules are nested in it. Both the Workspace and the C1 module code are nested in the IDE. Having made that note lets work trough why this message send fails: The workspace context is lexically NOT enclosing C1. The code line that we wrote, ~C1 new protectedFails~ is lexically in the workspace module; the member we are trying to access, ~protectedFails~, is lexically in the C1 module.  In summary, this fails because of rule on slide 63 b: An object (workspace where we type the expression) may access private or protected member (~protectedFails~) only if a) it is a member or b) a lexically visible member of an enclosing class (C1 class is not enclosing to Workspace class). In our situation, the code in expressions ~C1 new protectedFails~ typed in the Workspace class cannot see a private or protected member (~C1>>#protectedFails~) of a class (C1) because the method C1>>#protectedFails is neither a member of  Workspace, nor it is in Workspace''s enclosing class.
 
           Note: As a practical result, because we are testing in the workspace, we will make all our test methods in the C1 class public (for example ~public protC2New~, ~public protC2NewProtM~ and we will investigate the access rules on the expressions inside the methods on ~C1~. We name the methods on C1 so the naming reflects what the tested expression in the method does. For example: the name ~protC2NewProtM~ expresses in the name that we call the expression ~ProtC2 new protM~.  Also there is another important point here: For between-modules visibility: A module C1, looking into another module C2, can only see public members in C2. So C1 must make public any of it's members intended to be used outside of C1 - in other words, C1 module's API methods must be public. 
           *)
@@ -39,15 +40,16 @@
 
       public publicSucceeds = (
           ^'publicSucceeds' 
-          (* C1 new publicSucceeds: Success. 
+          (* C1 new publicSucceeds. 
 
+          Succeeds: 
           Reason: A public member (message named ~publicSucceeds~ here) is accessible from any lexical context - 'anywhere in code', even from another module (workspace in this case). 
           *) 
       )
 
       public protC2 = (
           ProtC2.  
-          (* Success. 
+          (* Succeeds: 
 
           Reason: According to *Slide 63 a, classes are allowed access to all it's members (even private or protected)*. Here, the code is in class C1 (in it's member method ~protC2~), and accesses ~C1~s member nested class ~ProtC2~, so ~ProtC2~ can be accessed. Same would apply if the member nested class was private (~private PrivC2~ instead of ~ProtC2~). 
           *)
@@ -56,9 +58,9 @@
 
       public protC2New = (
           ProtC2 new.
-          (* Success. 
+          (* Succeeds: 
 
-          Reason: Similar reason as in ~protC2~ in the section above: . There is a fine print reason here we should add (this reason is not spelled out in the slide rules): The rules on member class visibility transfer to their primary factory methods; so the fact that code in ~C1~ can access it's member ~ProtC2~, transforms to ~ProtC2~'s primary constructor, ~new~ in this case. In other words, ~C1~ can access it's member ~ProtC2~, implies that  ~C1~ can access it's member's primary factory (method ~new~).
+          Reason: Similar reason as in ~protC2~ in the section above: . There is a fine print reason here we should add (this reason is not spelled out in the slide rules): The rules on member class visibility transfer to their primary factory methods; so the fact that code in ~C1~ can access it's member ~ProtC2~, transforms to ~ProtC2~'s primary constructor, ~new~ in this case. In other words, ~C1~ can access it''s member ~ProtC2~, implies that  ~C1~ can access it''s member''s primary factory (method ~new~).
           *)
           ^ 'protC2New'
       )
@@ -66,7 +68,7 @@
       public protC2NewProtM = (
           ProtC2 new protM.
            
-          (* Fails.
+          (* Fails:
              Reason: We showed success all the way before sending ~protM~; sending ~protM~ (fully specified as ~C1>>ProtC2>>#protM~) fails. The code being executed, ~ProtC2 new protM~ is in class ~C1~. Method ~C1>>ProtC2>>#protM~ is a protected member on ~Prot2~, nested in ~C1~. According to *Slide 62 b) Enclosing classes (code in C1) cannot see private or protected members (protected method ~protM~) of nested classes (~ProtC2~).*, and so ~ProtC2 new protM~ fails according to this rule.
           *)
           ^ 'protC2NewProtM'
@@ -75,7 +77,7 @@
       public protC2NewPubM = (
           ProtC2 new pubM. 
 
-          (* Succeeds 
+          (* Succeeds: 
              Reason:  ~pubM~ is public. According to [[* Corollary on slides 61, 62, 63][Corollary on slides 61, 62, 63]] public members are accessible anywhere - even in nested classes that are not public. Here, ~C1>>ProtC2>>#pubM~ is accessible from anywhere.  
           *)
 

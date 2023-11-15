@@ -18,10 +18,10 @@
       )
 
       public l1m2 = (
-          L2 new.  (* Works even without L2 public. Reason: According to Slide 63 a, classes are allowed access to all it's members. Here, L2 is member of L1, so it satisfies the rule, and L2 can be accessed. *)
+          L2 new.  (* Succeeds even without L2 public. Reason: According to Slide 63 a, classes are allowed access to all it''s members. Here, L2 is member of L1, so it satisfies the rule, and L2 can be accessed. *)
       )
 
       public l1m3 = (
-          L3 new. (* Fails if L3 is not public. Reason: According to Slide 62 b, Enclosing classes cannot see private or protected members of nested classes. Here, the enclosing class L1 (where this code is), cannot see private or protected L3 member of it's nested class L2. *)
+          L3 new. (* Fails if L3 is not public. Reason: According to Slide 62 b, Enclosing classes cannot see private or protected members of nested classes. Here, the enclosing class L1 (where this code is), cannot see private or protected L3 member of it''s nested class L2. *)
       )
   )
